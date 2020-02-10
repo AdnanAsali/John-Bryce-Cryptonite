@@ -1,0 +1,244 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header {
+    display: flex;
+    margin: 0 auto;
+    display: flex;
+    width: 692px;
+    align-items: center;
+}
+
+.jb {
+    margin: 0 auto;
+    width: 260px;
+    height: 100px;
+}
+
+.jb img {
+    width: inherit;
+    height: inherit;
+}
+
+.title {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 300;
+}
+
+.crypto-img {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+}
+
+.crypto-img img {
+    width: inherit;
+    height: inherit;
+}
+
+input {
+    border: none;
+    outline: none;
+    font-weight: bold;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    margin: 0 auto;
+    width: 1200px;
+    margin-top: 40px;
+    border: 1px solid gray;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: inherit;
+    margin: 0 auto;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: calc(100%/3);
+    height: 150px;
+    border: 1px gray solid;
+    padding: 20px;
+}
+
+.coin-sym {
+    color: black;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.coin-name {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.more-info {
+    display: flex;
+    justify-content: center;
+    background-color: #007bff;
+    width: 100px;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+}
+
+.switch {
+    position: absolute;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    top: 20px;
+    right: 30px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+    height: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.nav {
+    display: flex;
+    position: absolute;
+    top: -40px;
+    left: -1px;
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    background-color: #007bff;
+    width: 80px;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 10px 10px 0 0;
+}
+
+.live {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    width: 120px;
+    padding: 10px;
+    cursor: pointer;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 10px 10px 0 0;
+}
+
+.about {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    width: 80px;
+    padding: 10px;
+    cursor: pointer;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 10px 10px 0 0;
+}
+
+.about:hover {
+    background-color: #007bff;
+    color: white;
+    transition: 500ms;
+}
+
+.home:hover {
+    background-color: #007bff;
+    color: white;
+    transition: 500ms;
+}
+
+.live:hover {
+    background-color: #007bff;
+    color: white;
+    transition: 500ms;
+}
+
+.search {
+    display: flex;
+    position: absolute;
+    top: -41px;
+    right: -1px;
+    border: 1px solid gray;
+    border-radius: 10px 10px 0 0;
+}
+
+.search-field {
+    padding: 10px;
+}
+
+.search-btn {
+    padding: 10px;
+    cursor: pointer;
+    border-left: 1px solid gray;
+}
+
+.search-btn:hover {
+    background-color: #007bff;
+    color: white;
+    transition: 500ms;
+}
