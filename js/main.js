@@ -1,9 +1,12 @@
 var cards = document.querySelector('.cards');
 var xhrObject = new XMLHttpRequest();
 
-xhrObject.onreadystatechange = function () {
-  if (xhrObject.readyState === 4) {
-    if (xhrObject.status === 200 || xhrObject.status === 304) {
+xhrObject.onreadystatechange = function () 
+{
+  if (xhrObject.readyState === 4) 
+  {
+    if (xhrObject.status === 200 || xhrObject.status === 304) 
+    {
       console.log(JSON.parse(xhrObject.responseText));
       var coin_data = JSON.parse(xhrObject.responseText);
       display_coins(coin_data);
@@ -19,10 +22,9 @@ xhrObject.open(
 
 xhrObject.send();
 
-
-
 window.addEventListener('load', function () 
 {
+
   var moreInfo = document.querySelectorAll('.card .more-info');
   moreInfo.forEach(btn => 
   {
@@ -40,6 +42,11 @@ window.addEventListener('load', function ()
             console.log(JSON.parse(xhrObject.responseText));
             var coin_moreInfo = JSON.parse(xhrObject.responseText);
             more_info_card(coin_moreInfo);
+            
+            var close_layout = document.querySelector('.close');
+            close_layout.addEventListener('click', () => {
+              close_more();
+            });
           }
         }
       };
@@ -53,10 +60,15 @@ window.addEventListener('load', function ()
       xhrObject.send();
     });
   });
-})
 
-var display_coins = (coin_data) => {
-  for (let i = 0; i < 100; i++) {
+ 
+});
+
+
+var display_coins = (coin_data) => 
+{
+  for (let i = 0; i < 100; i++) 
+  {
     cards.innerHTML += ` 
       <div class="card">
       <div class="coin-data">
@@ -80,24 +92,32 @@ var more_info_card = (data) =>
   layout.innerHTML += 
   `
   <div class="info-layout">
+    <div class="close">X</div>
     <div class="fetched-img">
         <img src="${data.image.large}" alt="coin-image">
     </div>
-    <div class="fetched-name">${data.name}</div>
-    <div class="fetched-sym">${data.symbol}</div>
-    <div class="fetched-desc">${data.description.en}</div>
-    <div class="fetched-homepage">
-        <a href="${data.links.homepage[0]}">${data.name}'s Homepage</a>
-    </div>
-    <div class="fetched-blockchain">
-        <a href="${data.links.blockchain_site[0]}">${data}'s Blockchain Site</a>
+    <div class="fetched-name">Name : ${data.name}</div>
+    <div class="fetched-sym">Symbol : ${data.symbol}</div>
+      ${data.description.en != "" ? `<div class="fetched-desc">${data.description.en}</div>` : "" }
+    <div class="fetched-links">
+      <div class="fetched-homepage">
+        ${data.links.homepage[0] != null ? `<a href="${data.links.homepage[0]}" target="_blank">Homepage</a>` : "" }          
+      </div>
+      <div class="fetched-blockchain">
+        ${data.links.blockchain_site[0] != null ? `<a href="${data.links.blockchain_site[0]}" target="_blank">Blockchain Site</a>` : "" }
+      </div>
     </div>
     <div class="fetched-social">
-        <a href="${data.links.repos_url.github[0]}">Github</a>
-        <a href="${data.links.subreddit_url}">Reddit</a>
+      ${data.links.repos_url.github[0] != null ? `<a href="${data.links.repos_url.github[0]}" target="_blank"><img src="../imgs/github-image.svg" alt=""></a>` : "" }
+      ${data.links.subreddit_url != null ? `<a href="${data.links.subreddit_url}" target="_blank"><img src="../imgs/reddit.svg" alt=""></a>` : "" }
     </div>
 </div>
   `;
-  console.log('done');
+}
+
+var close_more = () => 
+{
+  let layout = document.querySelector('.info-layout-container');
+  layout.innerHTML = ""; 
 }
 
