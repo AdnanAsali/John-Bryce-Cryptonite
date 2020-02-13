@@ -1,5 +1,9 @@
 var cards = document.querySelector('.cards');
 var xhrObject = new XMLHttpRequest();
+var searchInput = document.querySelector('.search-field input');
+var searchBtn = document.querySelector('.search-btn');
+var displayAll = document.querySelector('.all-btn');
+var coin_data = [];
 
 xhrObject.onreadystatechange = function () 
 {
@@ -8,7 +12,7 @@ xhrObject.onreadystatechange = function ()
     if (xhrObject.status === 200 || xhrObject.status === 304) 
     {
       console.log(JSON.parse(xhrObject.responseText));
-      var coin_data = JSON.parse(xhrObject.responseText);
+      coin_data = JSON.parse(xhrObject.responseText);
       display_coins(coin_data);
     }
   }
@@ -24,51 +28,46 @@ xhrObject.send();
 
 window.addEventListener('load', function () 
 {
+  moreEvent();
 
-  var moreInfo = document.querySelectorAll('.card .more-info');
-  moreInfo.forEach(btn => 
-  {
-    btn.addEventListener('click', () => 
-    {
-      console.log(btn.parentElement.querySelector('.coin-data .coin-name').innerHTML);
-      let clickedCoin = btn.parentElement.querySelector('.coin-data .coin-name').innerHTML;
-
-      xhrObject.onreadystatechange = function () 
-      {
-        if (xhrObject.readyState === 4) 
-        {
-          if (xhrObject.status === 200 || xhrObject.status === 304) 
-          {
-            console.log(JSON.parse(xhrObject.responseText));
-            var coin_moreInfo = JSON.parse(xhrObject.responseText);
-            more_info_card(coin_moreInfo);
-            
-            var close_layout = document.querySelector('.close');
-            close_layout.addEventListener('click', () => {
-              close_more();
-            });
-          }
-        }
-      };
-
-      xhrObject.open(
-        "GET",
-        `https://api.coingecko.com/api/v3/coins/${clickedCoin}`,
-        true
-      );
-
-      xhrObject.send();
-    });
+  searchBtn.addEventListener('click', () => {
+    var wanted  = searchInput.value.toLowerCase();
+    searchCoin(wanted, coin_data);
   });
 
- 
+  displayAll.addEventListener('click', () => {
+    display_coins(coin_data);
+  });
+
 });
 
+var searchCoin = (wantedCoin, coinArr) => 
+{
+  var searched = [];
+  coinArr.forEach(element => 
+  {
+    if(element.id.includes(wantedCoin,0))
+    {
+      searched.push(element);
+    } 
+  });
+  console.log(searched);
+  display_coins(searched);
+  moreEvent();
+}
 
 var display_coins = (coin_data) => 
 {
-  for (let i = 0; i < 100; i++) 
+  cards.innerHTML = "";
+
+  for (let i = 0; i < coin_data.length; i++) 
   {
+
+    if(i > 50)
+    {
+      break;
+    }
+
     cards.innerHTML += ` 
       <div class="card">
       <div class="coin-data">
@@ -87,6 +86,7 @@ var display_coins = (coin_data) =>
 
 var more_info_card = (data) => 
 {
+  console.log('into the more');
   let layout = document.querySelector('.info-layout-container');
   layout.innerHTML = ""; 
   layout.innerHTML += 
@@ -119,5 +119,44 @@ var close_more = () =>
 {
   let layout = document.querySelector('.info-layout-container');
   layout.innerHTML = ""; 
+}
+
+var moreEvent = () => 
+{
+  var moreInfo = document.querySelectorAll('.card .more-info');
+  moreInfo.forEach(btn => 
+  {
+    btn.addEventListener('click', () => 
+    {
+      console.log(btn.parentElement.querySelector('.coin-data .coin-name').innerHTML);
+      let clickedCoin = btn.parentElement.querySelector('.coin-data .coin-name').innerHTML;
+
+      xhrObject.onreadystatechange = function () 
+      {
+        if (xhrObject.readyState === 4) 
+        {
+          if (xhrObject.status === 200 || xhrObject.status === 304) 
+          {
+            console.log(JSON.parse(xhrObject.responseText));
+            var coin_moreInfo = JSON.parse(xhrObject.responseText);
+            more_info_card(coin_moreInfo);
+
+            var close_layout = document.querySelector('.close');
+            close_layout.addEventListener('click', () => {
+              close_more();
+            });
+          }
+        }
+      };
+
+      xhrObject.open(
+        "GET",
+        `https://api.coingecko.com/api/v3/coins/${clickedCoin}`,
+        true
+      );
+
+      xhrObject.send();
+    });
+  });
 }
 
