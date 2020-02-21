@@ -3,6 +3,8 @@ var xhrObject = new XMLHttpRequest();
 var searchInput = document.querySelector('.search-field input');
 var searchBtn = document.querySelector('.search-btn');
 var displayAll = document.querySelector('.all-btn');
+let liveCounter = 0;
+var liveCoins = [];
 var coin_data = [];
 
 xhrObject.onreadystatechange = function () 
@@ -30,12 +32,14 @@ window.addEventListener('load', function ()
 {
   moreEvent();
 
-  searchBtn.addEventListener('click', () => {
+  searchBtn.addEventListener('click', () => 
+  {
     var wanted  = searchInput.value.toLowerCase();
     searchCoin(wanted, coin_data);
   });
 
-  displayAll.addEventListener('click', () => {
+  displayAll.addEventListener('click', () => 
+  {
     display_coins(coin_data);
   });
 
@@ -70,19 +74,39 @@ var display_coins = (coin_data) =>
 
     cards.innerHTML += ` 
       <div class="card">
-      <div class="coin-data">
-      <div class="coin-sym">${coin_data[i].symbol}</div>
-      <div class="coin-name">${coin_data[i].id}</div>
-      </div>
-      <div class="more-info">More Info</div>
-      
-      <label class="switch">
-      <input type="checkbox">
-      <span class="slider round"></span>
-      </label>
+        <div class="coin-data">
+          <div class="coin-sym">${coin_data[i].symbol}</div>
+          <div class="coin-name">${coin_data[i].id}</div>
+        </div>
+        <div class="more-info">More Info</div>
+        
+        <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+        </label>
       </div>`;
+
+      let chosenCards = document.querySelectorAll('.card input');
+      chosenCards.forEach(chosenCard => 
+      {
+        chosenCard.addEventListener('click', () =>
+        {
+          if(chosenCard.checked === true && liveCounter < 5)
+          {
+            console.log(liveCounter)
+            chosenCard_id = chosenCard.parentElement.parentElement.querySelector('.coin-data .coin-name').innerHTML;
+            liveCoins.push(chosenCard_id);
+            liveCounter++;
+          }
+          else
+          {
+            console.log(liveCoins);
+            alert('confirm');
+          }
+        });
+      });
+    }
   }
-}
 
 var more_info_card = (data) => 
 {
@@ -158,5 +182,10 @@ var moreEvent = () =>
       xhrObject.send();
     });
   });
+}
+
+var show_live_reports = () => 
+{
+  
 }
 
