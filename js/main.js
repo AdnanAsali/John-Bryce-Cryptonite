@@ -205,9 +205,9 @@ var confirmed_coins = (confirmedArr) =>
         confirmationBox.innerHTML += 
         `
         <div class="coinName-list">
-        <div class="coin-name">
-        ${element}
-        </div>
+          <div class="coin-name">
+            ${element}
+          </div>
         </div>
         `
     });
@@ -259,7 +259,7 @@ liveSection.addEventListener('click', () =>
 // TODO :-
 // Display a screen with confirmation for the chosen coins DONE
 // Once confirmed save the array inside of local storage DONE
-// Pass the array inside of the local storage to the page which we were redirected to. 
-// Understand how to navigate in SPA
-// Make The about page and navigate to it
+// Pass the array inside of the local storage to the page which we were redirected to. DONE
+// Understand how to navigate in SPA and apply it 
+// Make The about page and navigate to it 
 // TESTING

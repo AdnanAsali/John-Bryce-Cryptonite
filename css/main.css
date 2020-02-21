@@ -92,7 +92,7 @@ input {
     justify-content: center;
     background-color: #FE082C;
     width: 100px;
-    padding: 10px;
+    padding: 7px;
     border-radius: 6px;
     cursor: pointer;
     color: white;
@@ -101,7 +101,8 @@ input {
 
 .more-info:hover
 {
-    
+    background-color: #EECC00;
+    transition: 300ms;
 }
 
 .switch {
@@ -397,22 +398,29 @@ input:checked+.slider:before {
     padding-bottom: 30px;
     margin: 0 auto;
     flex-direction: column;
-    background-color: #0B4F6C;
-    right: 33%;
+    background-color: #F2545B;
+    right: 37%;
     top: 33%;
+    border-radius: 10px;
 }
 
 .confirm-btn
 {
     text-align: center;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #EECC00;
     color: white;
-    font-weight: bold;
     font-size: 15px;
     width: 152px;
     margin: 30px 0;
     cursor: pointer;
+    border-radius: 50px;
+}
+
+.confirm-btn:hover
+{
+    background-color: #F2545B;
+    transition: 1s;
 }
 
 .coinName-list
