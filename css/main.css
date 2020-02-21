@@ -66,7 +66,7 @@ input {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: calc(100%/3);
+    width: calc(100%/2);
     height: 150px;
     border: 1px #0E0E0F solid;
     padding: 20px;
@@ -96,6 +96,7 @@ input {
     border-radius: 6px;
     cursor: pointer;
     color: white;
+    margin-bottom: 10px;
 }
 
 .more-info:hover
@@ -385,3 +386,73 @@ input:checked+.slider:before {
     right: 10px;
     cursor: pointer;
 }
+
+.confirmation
+{
+    position: fixed;
+    display: none;
+    align-items: center;
+    width: 500px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    flex-direction: column;
+    background-color: #0B4F6C;
+    right: 33%;
+    top: 33%;
+}
+
+.confirm-btn
+{
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    width: 152px;
+    margin: 30px 0;
+    cursor: pointer;
+}
+
+.coinName-list
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+}
+
+.coin-name
+{
+    color: white;
+    max-width: 60%;
+    margin: 20px auto;
+}
+
+.close-confirm
+{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

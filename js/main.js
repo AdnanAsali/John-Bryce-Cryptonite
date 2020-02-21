@@ -3,6 +3,7 @@ var xhrObject = new XMLHttpRequest();
 var searchInput = document.querySelector('.search-field input');
 var searchBtn = document.querySelector('.search-btn');
 var displayAll = document.querySelector('.all-btn');
+var liveSection = document.querySelector('.live');
 let liveCounter = 0;
 var liveCoins = [];
 var coin_data = [];
@@ -91,17 +92,29 @@ var display_coins = (coin_data) =>
       {
         chosenCard.addEventListener('click', () =>
         {
-          if(chosenCard.checked === true && liveCounter < 5)
-          {
-            console.log(liveCounter)
-            chosenCard_id = chosenCard.parentElement.parentElement.querySelector('.coin-data .coin-name').innerHTML;
-            liveCoins.push(chosenCard_id);
-            liveCounter++;
+            if(chosenCard.checked === true && liveCoins.length < 6)
+            {
+                if(liveCounter === 5)
+                {
+                    console.log(liveCoins)
+                    confirmed_coins(liveCoins);
+                }
+              chosenCard_id = chosenCard.parentElement.parentElement.querySelector('.coin-data .coin-name').innerHTML;
+              liveCoins.push(chosenCard_id);
+              liveCounter++;
+              console.log(liveCounter)
           }
           else
           {
+            if(liveCounter === 5)
+            {
+                console.log(liveCoins)
+                confirmed_coins(liveCoins);
+            }
+            liveCoins.pop(chosenCard_id);
+            liveCounter--;
+            chosenCard.checked = false;
             console.log(liveCoins);
-            alert('confirm');
           }
         });
       });
@@ -135,7 +148,7 @@ var more_info_card = (data) =>
       ${data.links.repos_url.github[0] != null ? `<a href="${data.links.repos_url.github[0]}" target="_blank"><img src="../imgs/github-image.svg" alt=""></a>` : "" }
       ${data.links.subreddit_url != null ? `<a href="${data.links.subreddit_url}" target="_blank"><img src="../imgs/reddit.svg" alt=""></a>` : "" }
     </div>
-</div>
+  </div>
   `;
 }
 
@@ -184,8 +197,69 @@ var moreEvent = () =>
   });
 }
 
-var show_live_reports = () => 
+var confirmed_coins = (confirmedArr) =>
+{
+    let confirmationBox = document.querySelector('.confirmation');
+    
+    confirmedArr.forEach(element => {
+        confirmationBox.innerHTML += 
+        `
+        <div class="coinName-list">
+        <div class="coin-name">
+        ${element}
+        </div>
+        </div>
+        `
+    });
+    
+    confirmationBox.innerHTML +=
+    `
+    <div class="confirm-btn">
+    Save Chosen Coins
+    </div>
+    <div class="close-confirm">X</div>
+    ` 
+    
+    confirmationBox.style.display = "flex";
+    let confirmationBtn = document.querySelector('.confirm-btn');
+    confirmationBtn.addEventListener('click', () => 
+    {
+        live_toLocalStorage(liveCoins);
+    });
+    
+    // Close Btn
+    let closeConfirm = document.querySelector('.close-confirm');
+    closeConfirm.addEventListener('click', () =>
+    {
+        document.querySelector('.confirmation').innerHTML = "";
+        confirmationBox.style.display = "none";
+    })
+    
+}
+
+var live_toLocalStorage = (liveCoins) =>
+{
+    localStorage.setItem("liveCoins", JSON.stringify(liveCoins));
+}
+
+var show_live_reports = (liveCoins) => 
 {
   
 }
 
+liveSection.addEventListener('click', () => 
+{
+    var storedNames = JSON.parse(localStorage.getItem("liveCoins"));
+    console.log(storedNames);
+});
+
+
+
+
+// TODO :-
+// Display a screen with confirmation for the chosen coins DONE
+// Once confirmed save the array inside of local storage DONE
+// Pass the array inside of the local storage to the page which we were redirected to. 
+// Understand how to navigate in SPA
+// Make The about page and navigate to it
+// TESTING
