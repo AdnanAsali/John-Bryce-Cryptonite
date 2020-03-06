@@ -1,9 +1,12 @@
 var cards = document.querySelector('.cards');
-var xhrObject = new XMLHttpRequest();
 var searchInput = document.querySelector('.search-field input');
 var searchBtn = document.querySelector('.search-btn');
 var displayAll = document.querySelector('.all-btn');
 var liveSection = document.querySelector('.live');
+var about = document.querySelector('.about');
+var home = document.querySelector('.home');
+var homeAn = document.querySelector('.home a');
+var xhrObject = new XMLHttpRequest();
 let liveCounter = 0;
 var liveCoins = [];
 var coin_data = [];
@@ -29,7 +32,32 @@ xhrObject.open(
 
 xhrObject.send();
 
-window.addEventListener('load', function () 
+
+about.addEventListener( 'click' , () => 
+{
+  cards.innerHTML = 
+  `
+  <div class="about-container">
+    <h1>Cryptonite FinTech</h1>
+    <h3>
+        This website uses CoinGecko API, which is one of the best APIs regarding Financial Technology,
+        take a <a href="index.html"><i>tour</i></a>  and check out all the crypto currency coins in the world.
+        In this website you search and check out the worth of every currency LIVE!
+        <br>
+        <br>
+        Have Fun :)
+    </h3>
+  </div>
+  `;
+
+  home.style.backgroundColor = 'white';
+  homeAn.style.color = 'black';
+  about.style.backgroundColor = '#242328';
+  about.style.color = 'white';
+});
+
+
+setTimeout( () => 
 {
   moreEvent();
 
@@ -43,8 +71,25 @@ window.addEventListener('load', function ()
   {
     display_coins(coin_data);
   });
+} , 3000);
 
-});
+
+window.onload = () => 
+{
+  moreEvent();
+  
+  searchBtn.addEventListener('click', () => 
+  {
+    var wanted  = searchInput.value.toLowerCase();
+    searchCoin(wanted, coin_data);
+  });
+  
+  displayAll.addEventListener('click', () => 
+  {
+    display_coins(coin_data);
+  });
+}
+
 
 var searchCoin = (wantedCoin, coinArr) => 
 {
@@ -67,7 +112,6 @@ var display_coins = (coin_data) =>
 
   for (let i = 0; i < coin_data.length; i++) 
   {
-
     if(i > 50)
     {
       break;
@@ -103,9 +147,9 @@ var display_coins = (coin_data) =>
               liveCoins.push(chosenCard_id);
               liveCounter++;
               console.log(liveCounter)
-          }
-          else
-          {
+            }
+            else
+            {
             if(liveCounter === 5)
             {
                 console.log(liveCoins)
@@ -163,36 +207,37 @@ var moreEvent = () =>
   var moreInfo = document.querySelectorAll('.card .more-info');
   moreInfo.forEach(btn => 
   {
+    let clicked = false;
     btn.addEventListener('click', () => 
     {
       console.log(btn.parentElement.querySelector('.coin-data .coin-name').innerHTML);
       let clickedCoin = btn.parentElement.querySelector('.coin-data .coin-name').innerHTML;
-
-      xhrObject.onreadystatechange = function () 
-      {
-        if (xhrObject.readyState === 4) 
+        
+        xhrObject.onreadystatechange = function () 
         {
-          if (xhrObject.status === 200 || xhrObject.status === 304) 
+          if (xhrObject.readyState === 4) 
           {
-            console.log(JSON.parse(xhrObject.responseText));
-            var coin_moreInfo = JSON.parse(xhrObject.responseText);
-            more_info_card(coin_moreInfo);
-
-            var close_layout = document.querySelector('.close');
-            close_layout.addEventListener('click', () => {
-              close_more();
-            });
+            if (xhrObject.status === 200 || xhrObject.status === 304) 
+            {
+              console.log(JSON.parse(xhrObject.responseText));
+              var coin_moreInfo = JSON.parse(xhrObject.responseText);
+              more_info_card(coin_moreInfo);
+  
+              var close_layout = document.querySelector('.close');
+              close_layout.addEventListener('click', () => {
+                close_more();
+              });
+            }
           }
-        }
-      };
-
-      xhrObject.open(
-        "GET",
-        `https://api.coingecko.com/api/v3/coins/${clickedCoin}`,
-        true
-      );
-
-      xhrObject.send();
+        };
+  
+        xhrObject.open(
+          "GET",
+          `https://api.coingecko.com/api/v3/coins/${clickedCoin}`,
+          true
+        );
+  
+        xhrObject.send();
     });
   });
 }
@@ -252,14 +297,3 @@ liveSection.addEventListener('click', () =>
     var storedNames = JSON.parse(localStorage.getItem("liveCoins"));
     console.log(storedNames);
 });
-
-
-
-
-// TODO :-
-// Display a screen with confirmation for the chosen coins DONE
-// Once confirmed save the array inside of local storage DONE
-// Pass the array inside of the local storage to the page which we were redirected to. DONE
-// Understand how to navigate in SPA and apply it 
-// Make The about page and navigate to it 
-// TESTING

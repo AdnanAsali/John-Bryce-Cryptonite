@@ -217,8 +217,8 @@ input:checked+.slider:before {
 }
 
 .home:hover {
-    background-color: #FE082C;
-    color: white;
+    background-color: #FE082C !important;
+    color: white !important;
     transition: 200ms;
 }
 
@@ -445,6 +445,23 @@ input:checked+.slider:before {
     top: 20px;
     right: 20px;
     cursor: pointer;
+}
+
+.about-container
+{
+    width: 70%;
+    margin: 80px auto;
+    padding: 140px;
+    border: 3px solid #FE082C;
+    background-color: #EECC00;
+    color: white;
+    border-radius: 50px;
+}
+
+.home a
+{
+    color: white;
+    text-decoration: none;
 }
 
 
